@@ -7,7 +7,7 @@ A simple MVC PHP Framework for learn PHP and MVC
 To use this simple PHP Framework you need to follow these steps
 
 - Clone the repository
-- Copy `.env.dist` -> `.env`
+- Copy `env.dist` -> `.env`
 - Replace the database values with yours
 
 ## Features
