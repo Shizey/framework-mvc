@@ -19,6 +19,10 @@ To use this simple PHP Framework you need to follow these steps
 | ✔ Model (database)      | [Link](doc/Model.md)     |
 | ✔ Debug                 | [Link](doc/Debug.md)     |
 
+## Examples
+
+If you want an example of application you can check the [example branch](https://github.com/Shizey/framework-mvc/tree/example)
+
 ## Needed upgrades
 
 - Fixtures
