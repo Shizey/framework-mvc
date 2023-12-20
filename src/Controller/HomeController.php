@@ -14,7 +14,6 @@ class HomeController implements ControllerInterface
 {
     public function index(Renderer $renderer, array $slugs): ResponseInterface
     {
-        $users = UserModel::fetchAll();
-        return new Response(200, [], $renderer->renderTwig('Home/index', ['users' => $users]));
+        return new Response(200, [], "Hello, World!");
     }
 }
