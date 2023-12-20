@@ -27,9 +27,37 @@ use Psr\Http\Message\ResponseInterface;
 #[RouteInfo("/", "GET")]
 class HomeController implements ControllerInterface
 {
-    public function index(Renderer $renderer, array $slugs): ResponseInterface
+    public function index(Renderer $renderer, array $parameters): ResponseInterface
     {
         return new Response(200, [], "Hello, World!");
+    }
+}
+```
+
+### Route paramaters (Slugs and Request)
+
+In your controller you can set variable to URL using the following syntax
+
+```php
+#[RouteInfo("/test/{variable}/", "GET")]
+class HomeController implements ControllerInterface
+{
+    public function index(Renderer $renderer, array $parameters): ResponseInterface
+    {
+        return new Response(200, [], "Slug : " . $parameters["slugs"]["variable"]);
+    }
+}
+```
+
+You also have in the `$parameters` variable access to the `ServerRequestInterface` from [Guzzle PSR7 implementation](https://github.com/guzzle/psr7)
+
+```php
+#[RouteInfo("/test/", "POST")]
+class ModifyUserFormController implements ControllerInterface
+{
+    public function index(Renderer $renderer, array $paramters): ResponseInterface
+    {
+        $body = $paramters['request']->getParsedBody();
     }
 }
 ```
