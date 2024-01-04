@@ -9,6 +9,12 @@ To use this simple PHP Framework you need to follow these steps
 - Clone the repository
 - Copy `env.dist` -> `.env`
 - Replace the database values with yours
+- Run `composer install` or `composer update` to install deps
+- Run `composer dump-autoload` to dump the autoloader
+
+## Start
+
+In the root of your project, run `php -S localhost:3000 -t public`
 
 ## Features
 

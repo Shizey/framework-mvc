@@ -6,7 +6,6 @@ use Framework\Attributes\RouteInfo;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Renderer;
 use GuzzleHttp\Psr7\Response;
-use Model\UserModel;
 use Psr\Http\Message\ResponseInterface;
 
 #[RouteInfo("/", "GET")]
