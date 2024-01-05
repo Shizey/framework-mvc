@@ -29,7 +29,7 @@ class UserFixtures implements FixturesInterface
 
 ## Load your Fixtures
 
-**⚠️ Load a fixture will remove all content in the current table**
+**🚨 Load a fixture will remove all content in the current table 🚨**
 
 To run your fixtures, simply run the following command
 
