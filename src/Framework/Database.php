@@ -32,6 +32,14 @@ class Database extends \PDO
         $this->exec(file_get_contents(__DIR__ . '/../../database/schema.sql'));
     }
 
+    public function tableExists(string $table): bool
+    {
+        $stmt = $this->prepare("SHOW TABLES LIKE :table");
+        $stmt->bindValue(':table', $table);
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
+    }
+
     /**
      * getInstance
      * The getInstance method is used to get the instance of the Database class

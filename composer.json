@@ -3,6 +3,7 @@
   "autoload": {
     "psr-4": {
       "Framework\\": "src/Framework",
+      "Fixtures\\": "src/Fixtures",
       "Controller\\": "src/Controller",
       "Model\\": "src/Model"
     },

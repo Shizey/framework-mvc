@@ -1,8 +1,6 @@
 <?php
 
-namespace Model;
-
-use Framework\Database;
+namespace Framework;
 
 /**
  * Class BaseModel

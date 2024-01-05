@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Framework\BaseModel;
 use Framework\Database;
 
 class UserModel extends BaseModel
