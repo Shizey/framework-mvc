@@ -1,5 +1,7 @@
 {
-  "name": "ptrj4222/framework-web",
+  "name": "ptrj4222/framework-mvc",
+  "description": "Framework PHP MVC",
+  "license": "UNLICENSED",
   "autoload": {
     "psr-4": {
       "Framework\\": "src/Framework",
