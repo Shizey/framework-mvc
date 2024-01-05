@@ -29,7 +29,3 @@ In the root of your project, run `php -S localhost:3000 -t public`
 ## Examples
 
 If you want an example of application you can check the [example branch](https://github.com/Shizey/framework-mvc/tree/example)
-
-## Needed upgrades
-
-- Controller for each function instead of class
