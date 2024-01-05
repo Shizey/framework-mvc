@@ -20,7 +20,6 @@
   "require": {
     "guzzlehttp/psr7": "^2.6",
     "http-interop/response-sender": "^1.0",
-    "spatie/global-ray": "^1.1",
     "symfony/var-dumper": "^6.4",
     "twig/twig": "^3.8",
     "vlucas/phpdotenv": "^5.6"
