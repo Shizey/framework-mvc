@@ -11,6 +11,10 @@
       "src/"
     ]
   },
+  "scripts": {
+    "test": "phpunit tests",
+    "fixtures": "Framework\\Fixtures::load"
+  },
   "authors": [
     {
       "name": "Adonis Rousse",

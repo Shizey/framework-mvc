@@ -34,5 +34,5 @@ class UserFixtures implements FixturesInterface
 To run your fixtures, simply run the following command
 
 ```bash
-php src/Framework/Fixtures.php
+composer run-script fixtures
 ```
