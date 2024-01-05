@@ -23,6 +23,7 @@ In the root of your project, run `php -S localhost:3000 -t public`
 | ✔ Routing               | [Link](doc/Routing.md)   |
 | ✔ Rendering (Twig, PHP) | [Link](doc/Rendering.md) |
 | ✔ Model (database)      | [Link](doc/Model.md)     |
+| ✔ Fixtures (database)   | [Link](doc/Fixtures.md)  |
 | ✔ Debug                 | [Link](doc/Debug.md)     |
 
 ## Examples
@@ -31,5 +32,4 @@ If you want an example of application you can check the [example branch](https:/
 
 ## Needed upgrades
 
-- Fixtures
 - Controller for each function instead of class
