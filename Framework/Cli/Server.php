@@ -9,14 +9,14 @@ class Server
 {
     public static function start(): void
     {
-        Dotenv::createImmutable(__DIR__ . '/../..')->load();
+        Dotenv::createImmutable(__DIR__.'/../..')->load();
 
         $host = $_ENV['SERVER_HOST'];
         $port = $_ENV['SERVER_PORT'];
 
-        $command = 'php -S ' . $host . ':' . $port . ' -t public';
+        $command = 'php -S '.$host.':'.$port.' -t public';
 
-        Colors::formatPrintLn(['yellow', 'bold'], '🚀 Starting server on ' . $host . ':' . $port . '...');
+        Colors::formatPrintLn(['yellow', 'bold'], '🚀 Starting server on '.$host.':'.$port.'...');
 
         shell_exec($command);
     }
