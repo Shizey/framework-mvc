@@ -2,9 +2,6 @@
 
 namespace Framework;
 
-use Framework\Attributes\RouteInfo;
-use ReflectionMethod;
-
 /**
  * Class Route
  * The Route class represents a route in the application
@@ -13,11 +10,11 @@ use ReflectionMethod;
  */
 class Route
 {
-    private ReflectionMethod $reflectionMethod;
+    private \ReflectionMethod $reflectionMethod;
     private string $path;
     private string $method;
 
-    public function __construct(ReflectionMethod $reflectionMethod, string $path, string $method)
+    public function __construct(\ReflectionMethod $reflectionMethod, string $path, string $method)
     {
         $this->reflectionMethod = $reflectionMethod;
         $this->path = $path;
@@ -34,7 +31,7 @@ class Route
         return $this->method;
     }
 
-    public function getReflectionMethod(): ReflectionMethod
+    public function getReflectionMethod(): \ReflectionMethod
     {
         return $this->reflectionMethod;
     }
