@@ -15,7 +15,9 @@
   },
   "scripts": {
     "test": "phpunit tests",
-    "fixtures": "Framework\\Fixtures::load"
+    "fixtures": "Framework\\Fixtures::load",
+    "php-fixer": "vendor/bin/php-cs-fixer fix  --diff -v",
+    "php-stan": "vendor/bin/phpstan analyse src tests"
   },
   "authors": [
     {
@@ -31,6 +33,8 @@
     "vlucas/phpdotenv": "^5.6"
   },
   "require-dev": {
-    "phpunit/phpunit": "^10"
+    "phpunit/phpunit": "^10",
+    "friendsofphp/php-cs-fixer": "^3.46",
+    "phpstan/phpstan": "^1.10"
   }
 }
