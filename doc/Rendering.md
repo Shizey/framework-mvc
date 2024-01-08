@@ -23,9 +23,9 @@ use Framework\Renderer;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
-#[RouteInfo("/", "GET")]
 class HomeController implements ControllerInterface
 {
+    #[RouteInfo("/", "GET")]
     public function index(Renderer $renderer, array $slugs): ResponseInterface
     {
         return new Response(200, [], $renderer->render('Home/index'));
@@ -46,9 +46,9 @@ use Framework\Renderer;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
-#[RouteInfo("/", "GET")]
 class HomeController implements ControllerInterface
 {
+    #[RouteInfo("/", "GET")]
     public function index(Renderer $renderer, array $slugs): ResponseInterface
     {
         return new Response(200, [], $renderer->renderTwig('Home/index')); // Instead you will use renderTwig function
