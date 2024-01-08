@@ -14,9 +14,9 @@
     ]
   },
   "scripts": {
-    "start": "php -S localhost:8000 -t public",
+    "start": "Framework\\Cli\\Server::start",
     "test": "phpunit tests",
-    "fixtures": "Framework\\Fixtures::load",
+    "fixtures": "Framework\\Cli\\Fixtures::load",
     "php-fixer": "vendor/bin/php-cs-fixer fix  --diff -v",
     "php-stan": "vendor/bin/phpstan analyse --level 8 src"
   },
