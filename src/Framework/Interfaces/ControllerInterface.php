@@ -11,5 +11,9 @@ use Psr\Http\Message\ResponseInterface;
  */
 interface ControllerInterface
 {
+    /**
+     * @param Renderer $renderer
+     * @param string[] $parameters
+     */
     public function index(Renderer $renderer, array $parameters): ResponseInterface;
 }

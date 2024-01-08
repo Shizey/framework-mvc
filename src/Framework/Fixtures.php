@@ -7,7 +7,7 @@ use Framework\Database;
 
 class Fixtures
 {
-    public static function load()
+    public static function load(): void
     {
         Colors::formatPrintLn(['yellow', 'bold'], '📜 Loading fixtures...');
 
@@ -18,6 +18,12 @@ class Fixtures
         Colors::formatPrintLn(['green'], '✅ Database connection established');
 
         $fixtures = scandir(__DIR__ . '/../Fixtures');
+
+        if (!$fixtures) {
+            Colors::formatPrintLn(['red'], '❌ No fixtures found');
+            return;
+        }
+
         foreach ($fixtures as $fixture) {
             if (is_file(__DIR__ . '/../Fixtures/' . $fixture) && str_ends_with($fixture, '.php')) {
                 Colors::formatPrintLn(['green'], '-------------------------');
@@ -25,8 +31,14 @@ class Fixtures
 
                 $fixture = 'Fixtures\\' . str_replace('.php', '', $fixture);
 
-                // Check if fixtures implements FixturesInterface
-                if (!in_array('Framework\Interfaces\FixturesInterface', class_implements($fixture))) {
+                $classImplements = class_implements($fixture);
+
+                if (!$classImplements) {
+                    Colors::formatPrintLn(['red'], '❌ ' . $fixture . ' does not implement any interface');
+                    continue;
+                }
+
+                if (!in_array('Framework\Interfaces\FixturesInterface', $classImplements)) {
                     Colors::formatPrintLn(['red'], '❌ ' . $fixture . ' does not implement FixturesInterface');
                     continue;
                 }
@@ -42,7 +54,12 @@ class Fixtures
 
                 // Load fixtures
                 Colors::formatPrintLn(['yellow'], '⏳ Loading ' . $fixture::TABLE . ' table...');
-                (new $fixture)->load();
+
+                /**
+                 * @var Fixtures $fixtureClass
+                 */
+                $fixtureClass = new $fixture();
+                $fixtureClass->load();
 
                 Colors::formatPrintLn(['green'], '✅ ' . $fixture::TABLE . ' table loaded');
             }

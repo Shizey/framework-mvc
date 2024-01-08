@@ -2,6 +2,7 @@
 
 namespace Framework;
 
+use Framework\Interfaces\ControllerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -11,6 +12,9 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class Router
 {
+    /**
+     * @var Route[]
+     */
     private array $routes = [];
 
     /**
@@ -59,6 +63,7 @@ class Router
 
         $route = array_shift($methodRoute);
 
+        /** @var ControllerInterface $controller */
         $controller = $route->getController();
 
         return $controller->index($renderer, [
@@ -67,6 +72,9 @@ class Router
         ]);
     }
 
+    /**
+     * @return string[]
+     */
     private function getRoutesPath(): array
     {
         return array_map(function ($route) {
@@ -96,6 +104,10 @@ class Router
      * Example of output:
      * $slugs = ['id' => '1']
      * $explodedValue = ['user', '1']
+     * 
+     * @param string[] $explodedUrl
+     * @param string[] $explodedValue
+     * @return array<string, mixed>[]
      */
     private function getSlugs(array $explodedUrl, array $explodedValue): array
     {
@@ -107,12 +119,16 @@ class Router
                 $explodedValue[$key] = $explodedUrl[$key] ?? null;
             }
         }
+
         return [$slugs, $explodedValue];
     }
 
     /**
      * getMatchedRoute
      * The getMatchedRoute method take the url and the routes and return the route that match the url
+     * @param string $url
+     * @param string[] $urls
+     * @return array<string, mixed>
      */
     private function getMatchedRoute(string $url, array $urls): array
     {
@@ -137,5 +153,4 @@ class Router
             'slugs' => []
         ];
     }
-
 }

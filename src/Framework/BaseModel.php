@@ -10,12 +10,16 @@ abstract class BaseModel
 {
 
     protected Database $db;
+    protected const TABLE = "";
     private int $id;
-    public function __construct()
+    public final function __construct()
     {
         $this->db = Database::getInstance();
     }
 
+    /**
+     * @return object[]
+     */
     public static function fetchAll(): array
     {
         $stmt = (Database::getInstance())->prepare("SELECT * FROM " . static::TABLE);
@@ -50,6 +54,10 @@ abstract class BaseModel
         return false;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @return object[]
+     */
     public static function fetchBy(array $data): array
     {
         $query = "SELECT * FROM " . static::TABLE . " WHERE ";
@@ -74,7 +82,11 @@ abstract class BaseModel
         $stmt->execute();
     }
 
-    // This function create an object from an array of data
+    /**
+     * This function create an object from an array of data
+     * @param array<string, mixed> $data
+     * @return object
+     */
     abstract public function createObj(array $data): object;
     abstract public function save(): void;
 }

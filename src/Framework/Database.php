@@ -4,6 +4,9 @@ namespace Framework;
 
 class Database extends \PDO
 {
+    /**
+     * @var Database
+     */
     private static $instance;
 
     /**
@@ -29,7 +32,13 @@ class Database extends \PDO
         $this->exec("CREATE DATABASE IF NOT EXISTS `$dbName`");
         $this->exec("use `$dbName`");
 
-        $this->exec(file_get_contents(__DIR__ . '/../../database/schema.sql'));
+        $content = file_get_contents(__DIR__ . '/../../database/schema.sql');
+
+        if ($content === false) {
+            throw new \Exception("Impossible to read the schema.sql file");
+        }
+
+        $this->exec($content);
     }
 
     public function tableExists(string $table): bool

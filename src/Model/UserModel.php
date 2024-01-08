@@ -10,9 +10,6 @@ class UserModel extends BaseModel
 
     public const TABLE = 'user';
     private string $username;
-    public function __construct()
-    {
-    }
 
     public function setUsername(string $username): self
     {

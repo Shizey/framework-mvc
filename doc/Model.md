@@ -34,11 +34,8 @@ use Framework\Database;
 class UserModel extends BaseModel
 {
 
-    public const TABLE = 'user'; //
+    public const TABLE = 'user';
     private string $username;
-    public function __construct()
-    {
-    }
 
     public function setUsername(string $username): self
     {

@@ -8,7 +8,14 @@ namespace Framework\Utils;
  */
 class Colors
 {
-    public static function formatPrint(array $format = [], string $text = '')
+    /**
+     * formatPrint
+     *
+     * @param  string[] $format
+     * @param  string $text
+     * @return void
+     */
+    public static function formatPrint(array $format = [], string $text = ''): void
     {
         $codes = [
             'bold' => 1,
@@ -37,7 +44,15 @@ class Colors
         }, $format);
         echo "\e[" . implode(';', $formatMap) . 'm' . $text . "\e[0m";
     }
-    public static function formatPrintLn(array $format = [], string $text = '')
+
+    /**
+     * formatPrintLn
+     * 
+     * @param  string[] $format
+     * @param  string $text
+     * @return void
+     */
+    public static function formatPrintLn(array $format = [], string $text = ''): void
     {
         self::formatPrint($format, $text);
         echo "\r\n";

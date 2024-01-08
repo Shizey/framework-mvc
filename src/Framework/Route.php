@@ -3,6 +3,7 @@
 namespace Framework;
 
 use Framework\Attributes\RouteInfo;
+use Framework\Interfaces\ControllerInterface;
 
 /**
  * Class Route
@@ -12,13 +13,23 @@ use Framework\Attributes\RouteInfo;
  */
 class Route
 {
+    /**
+     * Controller is a string representing the controller class
+     * @var class-string $controller
+     */
     private string $controller;
 
+    /**
+     * @param class-string $controller
+     */
     public function __construct(string $controller)
     {
         $this->controller = $controller;
     }
 
+    /**
+     * @return \ReflectionAttribute<RouteInfo>
+     */
     private function getAttributes(): \ReflectionAttribute
     {
         $controller = new \ReflectionClass($this->controller);

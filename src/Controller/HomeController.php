@@ -12,9 +12,8 @@ use Psr\Http\Message\ResponseInterface;
 #[RouteInfo("/", "GET")]
 class HomeController implements ControllerInterface
 {
-    public function index(Renderer $renderer, array $slugs): ResponseInterface
+    public function index(Renderer $renderer, array $parameters): ResponseInterface
     {
-        $user = UserModel::fetchById(3);
-        return new Response(200, [], "Hello " . $user->getUsername() . "!");
+        return new Response(200, [], "Hello World !");
     }
 }
