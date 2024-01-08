@@ -3,19 +3,19 @@
 namespace Framework;
 
 use Framework\Attributes\RouteInfo;
-use Framework\Interfaces\ControllerInterface;
 
 /**
  * Class Route
  * The Route class represents a route in the application
  * The Route class is used by the Router to get the path, method and controller of a route
- * By using the Route class, the controller must be using index as the method name
+ * By using the Route class, the controller must be using index as the method name.
  */
 class Route
 {
     /**
-     * Controller is a string representing the controller class
-     * @var class-string $controller
+     * Controller is a string representing the controller class.
+     *
+     * @var class-string
      */
     private string $controller;
 

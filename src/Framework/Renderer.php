@@ -7,7 +7,7 @@ use Twig\Loader\FilesystemLoader;
 
 /**
  * Class Renderer
- * The Renderer class is responsible for rendering the views using diffrerent template engines
+ * The Renderer class is responsible for rendering the views using diffrerent template engines.
  */
 class Renderer
 {
@@ -25,12 +25,12 @@ class Renderer
 
     /**
      * render
-     * The render method is used to render a view using basic PHP
+     * The render method is used to render a view using basic PHP.
      */
     public function render(string $view): string
     {
         ob_start();
-        require $this->viewPath . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $view) . $this->phpExtension;
+        require $this->viewPath.DIRECTORY_SEPARATOR.str_replace('/', DIRECTORY_SEPARATOR, $view).$this->phpExtension;
         $obj_clean = ob_get_clean();
 
         if ($obj_clean === false) {
@@ -42,12 +42,12 @@ class Renderer
 
     /**
      * renderTwig
-     * The renderTwig method is used to render a view using Twig
-     * @param string $view
+     * The renderTwig method is used to render a view using Twig.
+     *
      * @param array<string, mixed> $params
      */
     public function renderTwig(string $view, array $params = []): string
     {
-        return $this->twig->render($view . $this->twigExtension, $params);
+        return $this->twig->render($view.$this->twigExtension, $params);
     }
 }

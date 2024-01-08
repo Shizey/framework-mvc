@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class Router
- * The Router class is responsible for dispatching the routes to the controllers
+ * The Router class is responsible for dispatching the routes to the controllers.
  */
 class Router
 {
@@ -19,7 +19,7 @@ class Router
 
     /**
      * add
-     * The add method is used to add a route to the router
+     * The add method is used to add a route to the router.
      */
     public function add(Route $route): void
     {
@@ -28,7 +28,7 @@ class Router
         $findRoute = array_search($route->getPath(), $routesPath);
 
         if ($findRoute !== false && $this->routes[$findRoute]->getMethod() === $route->getMethod()) {
-            throw new \Exception('This route already exist with the path: ' . $route->getPath());
+            throw new \Exception('This route already exist with the path: '.$route->getPath());
         }
 
         $this->routes[] = $route;
@@ -36,17 +36,17 @@ class Router
 
     /**
      * dispatch
-     * The dispatch method is used to dispatch the route to the controller
+     * The dispatch method is used to dispatch the route to the controller.
      */
     public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
-        $renderer = new Renderer(__DIR__ . '/../View');
+        $renderer = new Renderer(__DIR__.'/../View');
         $routesPath = $this->getRoutesPath();
         $routeInfo = $this->getMatchedRoute($request->getUri()->getPath(), $routesPath);
         $routePath = $routeInfo['path'];
 
         if ($routePath === '') {
-            throw new \Exception('This route does not exist with the path: ' . $request->getUri()->getPath());
+            throw new \Exception('This route does not exist with the path: '.$request->getUri()->getPath());
         }
 
         $methodRoute = array_filter($this->routes, function ($route) use ($routePath, $request) {
@@ -54,11 +54,11 @@ class Router
         });
 
         if (count($methodRoute) === 0) {
-            throw new \Exception('The route ' . $routePath . ' does not exist with the method: ' . $request->getMethod());
+            throw new \Exception('The route '.$routePath.' does not exist with the method: '.$request->getMethod());
         }
 
         if (count($methodRoute) > 1) {
-            throw new \Exception('The route ' . $routePath . ' exist more than one time with the method: ' . $request->getMethod());
+            throw new \Exception('The route '.$routePath.' exist more than one time with the method: '.$request->getMethod());
         }
 
         $route = array_shift($methodRoute);
@@ -87,6 +87,7 @@ class Router
         if (!str_ends_with($url, '/')) {
             $url .= '/';
         }
+
         return $url;
     }
 
@@ -95,18 +96,19 @@ class Router
      * The getSlugs method is used to get the slugs of the route
      * The slugs are the parameters of the route
      * They are defined by the curly braces
-     * For example: /user/{id}
-     * 
+     * For example: /user/{id}.
+     *
      * Example of input:
      * $explodedUrl = ['user', '1']
      * $explodedValue = ['user', '{id}']
-     * 
+     *
      * Example of output:
      * $slugs = ['id' => '1']
      * $explodedValue = ['user', '1']
-     * 
+     *
      * @param string[] $explodedUrl
      * @param string[] $explodedValue
+     *
      * @return array<string, mixed>[]
      */
     private function getSlugs(array $explodedUrl, array $explodedValue): array
@@ -125,9 +127,10 @@ class Router
 
     /**
      * getMatchedRoute
-     * The getMatchedRoute method take the url and the routes and return the route that match the url
-     * @param string $url
+     * The getMatchedRoute method take the url and the routes and return the route that match the url.
+     *
      * @param string[] $urls
+     *
      * @return array<string, mixed>
      */
     private function getMatchedRoute(string $url, array $urls): array
@@ -143,14 +146,14 @@ class Router
             if ($url === implode('/', $explodedValue)) {
                 return [
                     'path' => $currentUrl,
-                    'slugs' => $slugs
+                    'slugs' => $slugs,
                 ];
             }
         }
 
         return [
             'path' => '',
-            'slugs' => []
+            'slugs' => [],
         ];
     }
 }

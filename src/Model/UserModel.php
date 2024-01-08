@@ -7,13 +7,13 @@ use Framework\Database;
 
 class UserModel extends BaseModel
 {
-
     public const TABLE = 'user';
     private string $username;
 
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -26,12 +26,12 @@ class UserModel extends BaseModel
     {
         $this->db = Database::getInstance();
         if (self::fetchById($this->getId())) {
-            $stmt = $this->db->prepare("UPDATE " . self::TABLE . " SET username = :username WHERE id = :id");
+            $stmt = $this->db->prepare('UPDATE '.self::TABLE.' SET username = :username WHERE id = :id');
             $stmt->bindValue(':username', $this->getUsername());
             $stmt->bindValue(':id', $this->getId());
             $stmt->execute();
         } else {
-            $stmt = $this->db->prepare("INSERT INTO " . self::TABLE . " (username) VALUES (:username)");
+            $stmt = $this->db->prepare('INSERT INTO '.self::TABLE.' (username) VALUES (:username)');
             $stmt->bindValue(':username', $this->getUsername());
             $stmt->execute();
         }
@@ -42,6 +42,7 @@ class UserModel extends BaseModel
         $user = new UserModel();
         $user->setUsername($data['username']);
         $user->setId($data['id']);
+
         return $user;
     }
 }

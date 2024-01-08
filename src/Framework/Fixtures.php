@@ -1,9 +1,9 @@
 <?php
+
 namespace Framework;
 
 use Dotenv\Dotenv;
 use Framework\Utils\Colors;
-use Framework\Database;
 
 class Fixtures
 {
@@ -11,49 +11,50 @@ class Fixtures
     {
         Colors::formatPrintLn(['yellow', 'bold'], '📜 Loading fixtures...');
 
-        (Dotenv::createImmutable(__DIR__ . '/../..'))->load();
+        Dotenv::createImmutable(__DIR__.'/../..')->load();
         Colors::formatPrintLn(['green'], '✅ Environment variables loaded');
 
         $db = Database::getInstance();
         Colors::formatPrintLn(['green'], '✅ Database connection established');
 
-        $fixtures = scandir(__DIR__ . '/../Fixtures');
+        $fixtures = scandir(__DIR__.'/../Fixtures');
 
         if (!$fixtures) {
             Colors::formatPrintLn(['red'], '❌ No fixtures found');
+
             return;
         }
 
         foreach ($fixtures as $fixture) {
-            if (is_file(__DIR__ . '/../Fixtures/' . $fixture) && str_ends_with($fixture, '.php')) {
+            if (is_file(__DIR__.'/../Fixtures/'.$fixture) && str_ends_with($fixture, '.php')) {
                 Colors::formatPrintLn(['green'], '-------------------------');
-                Colors::formatPrintLn(['yellow'], '📁 Loading ' . $fixture . '...');
+                Colors::formatPrintLn(['yellow'], '📁 Loading '.$fixture.'...');
 
-                $fixture = 'Fixtures\\' . str_replace('.php', '', $fixture);
+                $fixture = 'Fixtures\\'.str_replace('.php', '', $fixture);
 
                 $classImplements = class_implements($fixture);
 
                 if (!$classImplements) {
-                    Colors::formatPrintLn(['red'], '❌ ' . $fixture . ' does not implement any interface');
+                    Colors::formatPrintLn(['red'], '❌ '.$fixture.' does not implement any interface');
                     continue;
                 }
 
                 if (!in_array('Framework\Interfaces\FixturesInterface', $classImplements)) {
-                    Colors::formatPrintLn(['red'], '❌ ' . $fixture . ' does not implement FixturesInterface');
+                    Colors::formatPrintLn(['red'], '❌ '.$fixture.' does not implement FixturesInterface');
                     continue;
                 }
                 // Check if table exists
                 if ($fixture::TABLE === '' || !$db->tableExists($fixture::TABLE)) {
-                    Colors::formatPrintLn(['red'], '❌ the table "' . $fixture::TABLE . '" does not exist');
+                    Colors::formatPrintLn(['red'], '❌ the table "'.$fixture::TABLE.'" does not exist');
                     continue;
                 }
 
                 // Clear table
-                Colors::formatPrintLn(['yellow'], '🧹 Clearing ' . $fixture::TABLE . ' table...');
-                $db->query('DELETE FROM ' . $fixture::TABLE);
+                Colors::formatPrintLn(['yellow'], '🧹 Clearing '.$fixture::TABLE.' table...');
+                $db->query('DELETE FROM '.$fixture::TABLE);
 
                 // Load fixtures
-                Colors::formatPrintLn(['yellow'], '⏳ Loading ' . $fixture::TABLE . ' table...');
+                Colors::formatPrintLn(['yellow'], '⏳ Loading '.$fixture::TABLE.' table...');
 
                 /**
                  * @var Fixtures $fixtureClass
@@ -61,7 +62,7 @@ class Fixtures
                 $fixtureClass = new $fixture();
                 $fixtureClass->load();
 
-                Colors::formatPrintLn(['green'], '✅ ' . $fixture::TABLE . ' table loaded');
+                Colors::formatPrintLn(['green'], '✅ '.$fixture::TABLE.' table loaded');
             }
         }
 

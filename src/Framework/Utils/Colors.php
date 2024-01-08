@@ -4,16 +4,14 @@ namespace Framework\Utils;
 
 /**
  * Class Colors
- * The Colors class is used to format the output of the console with colors
+ * The Colors class is used to format the output of the console with colors.
  */
 class Colors
 {
     /**
-     * formatPrint
+     * formatPrint.
      *
-     * @param  string[] $format
-     * @param  string $text
-     * @return void
+     * @param string[] $format
      */
     public static function formatPrint(array $format = [], string $text = ''): void
     {
@@ -37,20 +35,18 @@ class Colors
             'bluebg' => 44,
             'magentabg' => 45,
             'cyanbg' => 46,
-            'lightgreybg' => 47
+            'lightgreybg' => 47,
         ];
         $formatMap = array_map(function ($v) use ($codes) {
             return $codes[$v];
         }, $format);
-        echo "\e[" . implode(';', $formatMap) . 'm' . $text . "\e[0m";
+        echo "\e[".implode(';', $formatMap).'m'.$text."\e[0m";
     }
 
     /**
-     * formatPrintLn
-     * 
-     * @param  string[] $format
-     * @param  string $text
-     * @return void
+     * formatPrintLn.
+     *
+     * @param string[] $format
      */
     public static function formatPrintLn(array $format = [], string $text = ''): void
     {

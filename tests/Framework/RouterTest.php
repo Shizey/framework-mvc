@@ -1,4 +1,5 @@
 <?php
+
 use Framework\Interfaces\ControllerInterface;
 use Framework\Route;
 use Framework\Router;
@@ -10,7 +11,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class RouterTest extends TestCase
 {
-
     private Router $router;
 
     public function setUp(): void
@@ -57,7 +57,7 @@ final class RouterTest extends TestCase
         $this->router->add($route);
 
         $request = $this->createMock(ServerRequestInterface::class);
-        $request->method('getUri')->willReturn(new class {
+        $request->method('getUri')->willReturn(new class() {
             public function getPath()
             {
                 return '/test';
@@ -76,7 +76,7 @@ final class RouterTest extends TestCase
         $this->expectExceptionMessage('This route does not exist with the path: /test2');
 
         $request = $this->createMock(ServerRequestInterface::class);
-        $request->method('getUri')->willReturn(new class {
+        $request->method('getUri')->willReturn(new class() {
             public function getPath()
             {
                 return '/test2';
@@ -103,7 +103,7 @@ final class RouterTest extends TestCase
 
         $request = $this->createMock(ServerRequestInterface::class);
 
-        $request->method('getUri')->willReturn(new class {
+        $request->method('getUri')->willReturn(new class() {
             public function getPath()
             {
                 return '/test';

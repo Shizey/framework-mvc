@@ -7,12 +7,11 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Interface ControllerInterface
- * The ControllerInterface is used to define the methods that a controller must implement to be used by the Router
+ * The ControllerInterface is used to define the methods that a controller must implement to be used by the Router.
  */
 interface ControllerInterface
 {
     /**
-     * @param Renderer $renderer
      * @param string[] $parameters
      */
     public function index(Renderer $renderer, array $parameters): ResponseInterface;
