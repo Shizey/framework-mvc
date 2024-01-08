@@ -18,7 +18,7 @@ class Database extends \PDO
     private function __construct()
     {
         parent::__construct(
-            'mysql:host='.$_ENV['DB_HOST'].';port='.$_ENV['DB_PORT'].';charset=utf8',
+            'mysql:host=' . $_ENV['DB_HOST'] . ';port=' . $_ENV['DB_PORT'] . ';charset=utf8',
             $_ENV['DB_USER'],
             $_ENV['DB_PASSWORD'],
             [
@@ -32,7 +32,7 @@ class Database extends \PDO
         $this->exec("CREATE DATABASE IF NOT EXISTS `$dbName`");
         $this->exec("use `$dbName`");
 
-        $content = file_get_contents(__DIR__.'/../../database/schema.sql');
+        $content = file_get_contents(__DIR__ . '/../database/schema.sql');
 
         if ($content === false) {
             throw new \Exception('Impossible to read the schema.sql file');
