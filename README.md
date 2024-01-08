@@ -14,7 +14,7 @@ To use this simple PHP Framework you need to follow these steps
 
 ## Start
 
-In the root of your project, run `php -S localhost:3000 -t public`
+Simply run the command `composer start` !
 
 ## Features
 

@@ -14,6 +14,7 @@
     ]
   },
   "scripts": {
+    "start": "php -S localhost:8000 -t public",
     "test": "phpunit tests",
     "fixtures": "Framework\\Fixtures::load",
     "php-fixer": "vendor/bin/php-cs-fixer fix  --diff -v",
