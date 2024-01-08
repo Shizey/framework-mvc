@@ -2,6 +2,7 @@
 
 namespace Framework;
 
+use Framework\Attributes\RouteInfo;
 use Framework\Interfaces\ControllerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -28,10 +29,31 @@ class Router
         $findRoute = array_search($route->getPath(), $routesPath);
 
         if ($findRoute !== false && $this->routes[$findRoute]->getMethod() === $route->getMethod()) {
-            throw new \Exception('This route already exist with the path: '.$route->getPath());
+            throw new \Exception('This route already exist with the path: ' . $route->getPath());
         }
 
         $this->routes[] = $route;
+    }
+
+    /**
+     * setRoutesFromController
+     * The setRoutesFromController method is used to add the different routes of a controller to the router.
+     * @param class-string $controller
+     * @return void
+     */
+    public function setRoutesFromController(string $controller): void
+    {
+        $methods = (new \ReflectionClass($controller))->getMethods();
+
+        foreach ($methods as $method) {
+            $attributes = $method->getAttributes(RouteInfo::class);
+
+            if (count($attributes) > 0) {
+                $routeInfo = $attributes[0]->newInstance();
+                $route = new Route($method, $routeInfo->path, $routeInfo->method);
+                $this->add($route);
+            }
+        }
     }
 
     /**
@@ -40,13 +62,11 @@ class Router
      */
     public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
-        $renderer = new Renderer(__DIR__.'/../View');
-        $routesPath = $this->getRoutesPath();
-        $routeInfo = $this->getMatchedRoute($request->getUri()->getPath(), $routesPath);
+        $routeInfo = $this->getMatchedRoute($request->getUri()->getPath(), $this->getRoutesPath());
         $routePath = $routeInfo['path'];
 
         if ($routePath === '') {
-            throw new \Exception('This route does not exist with the path: '.$request->getUri()->getPath());
+            throw new \Exception('This route does not exist with the path: ' . $request->getUri()->getPath());
         }
 
         $methodRoute = array_filter($this->routes, function ($route) use ($routePath, $request) {
@@ -54,22 +74,22 @@ class Router
         });
 
         if (count($methodRoute) === 0) {
-            throw new \Exception('The route '.$routePath.' does not exist with the method: '.$request->getMethod());
+            throw new \Exception('The route ' . $routePath . ' does not exist with the method: ' . $request->getMethod());
         }
 
         if (count($methodRoute) > 1) {
-            throw new \Exception('The route '.$routePath.' exist more than one time with the method: '.$request->getMethod());
+            throw new \Exception('The route ' . $routePath . ' exist more than one time with the method: ' . $request->getMethod());
         }
 
         $route = array_shift($methodRoute);
 
-        /** @var ControllerInterface $controller */
         $controller = $route->getController();
 
-        return $controller->index($renderer, [
-            'slugs' => $routeInfo['slugs'],
-            'request' => $request,
-        ]);
+        if (!$controller instanceof ControllerInterface) {
+            throw new \Exception('The controller must implement the ControllerInterface');
+        }
+
+        return $controller->{$route->getReflectionMethod()->getName()}(new Renderer(__DIR__ . '/../View'), $routeInfo['slugs']);
     }
 
     /**
