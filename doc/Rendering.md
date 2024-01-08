@@ -17,15 +17,9 @@ The controller will look like this
 ```php
 namespace Controller;
 
-use Framework\Attributes\RouteInfo;
-use Framework\Interfaces\ControllerInterface;
-use Framework\Renderer;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
-
-#[RouteInfo("/", "GET")]
-class HomeController implements ControllerInterface
+class HomeController
 {
+    #[RouteInfo("/", "GET")]
     public function index(Renderer $renderer, array $slugs): ResponseInterface
     {
         return new Response(200, [], $renderer->render('Home/index'));
@@ -40,15 +34,9 @@ The twig rendering its the same as the PHP rendering
 ```php
 namespace Controller;
 
-use Framework\Attributes\RouteInfo;
-use Framework\Interfaces\ControllerInterface;
-use Framework\Renderer;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
-
-#[RouteInfo("/", "GET")]
-class HomeController implements ControllerInterface
+class HomeController
 {
+    #[RouteInfo("/", "GET")]
     public function index(Renderer $renderer, array $slugs): ResponseInterface
     {
         return new Response(200, [], $renderer->renderTwig('Home/index')); // Instead you will use renderTwig function

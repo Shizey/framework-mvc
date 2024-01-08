@@ -2,7 +2,7 @@
 
 namespace Framework;
 
-use Framework\Interfaces\ControllerInterface;
+use Framework\Attributes\RouteInfo;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -35,14 +35,33 @@ class Router
     }
 
     /**
+     * setRoutesFromController
+     * The setRoutesFromController method is used to add the different routes of a controller to the router.
+     *
+     * @param class-string $controller
+     */
+    public function setRoutesFromController(string $controller): void
+    {
+        $methods = (new \ReflectionClass($controller))->getMethods();
+
+        foreach ($methods as $method) {
+            $attributes = $method->getAttributes(RouteInfo::class);
+
+            if (count($attributes) > 0) {
+                $routeInfo = $attributes[0]->newInstance();
+                $route = new Route($method, $routeInfo->path, $routeInfo->method);
+                $this->add($route);
+            }
+        }
+    }
+
+    /**
      * dispatch
      * The dispatch method is used to dispatch the route to the controller.
      */
     public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
-        $renderer = new Renderer(__DIR__.'/../View');
-        $routesPath = $this->getRoutesPath();
-        $routeInfo = $this->getMatchedRoute($request->getUri()->getPath(), $routesPath);
+        $routeInfo = $this->getMatchedRoute($request->getUri()->getPath(), $this->getRoutesPath());
         $routePath = $routeInfo['path'];
 
         if ($routePath === '') {
@@ -63,13 +82,9 @@ class Router
 
         $route = array_shift($methodRoute);
 
-        /** @var ControllerInterface $controller */
         $controller = $route->getController();
 
-        return $controller->index($renderer, [
-            'slugs' => $routeInfo['slugs'],
-            'request' => $request,
-        ]);
+        return $controller->{$route->getReflectionMethod()->getName()}(new Renderer(__DIR__.'/../View'), $routeInfo['slugs']);
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace Framework;
 
-use Framework\Attributes\RouteInfo;
-
 /**
  * Class Route
  * The Route class represents a route in the application
@@ -12,43 +10,34 @@ use Framework\Attributes\RouteInfo;
  */
 class Route
 {
-    /**
-     * Controller is a string representing the controller class.
-     *
-     * @var class-string
-     */
-    private string $controller;
+    private \ReflectionMethod $reflectionMethod;
+    private string $path;
+    private string $method;
 
-    /**
-     * @param class-string $controller
-     */
-    public function __construct(string $controller)
+    public function __construct(\ReflectionMethod $reflectionMethod, string $path, string $method)
     {
-        $this->controller = $controller;
-    }
-
-    /**
-     * @return \ReflectionAttribute<RouteInfo>
-     */
-    private function getAttributes(): \ReflectionAttribute
-    {
-        $controller = new \ReflectionClass($this->controller);
-
-        return $controller->getAttributes(RouteInfo::class)[0];
+        $this->reflectionMethod = $reflectionMethod;
+        $this->path = $path;
+        $this->method = $method;
     }
 
     public function getPath(): string
     {
-        return $this->getAttributes()->newInstance()->path;
+        return $this->path;
     }
 
     public function getMethod(): string
     {
-        return $this->getAttributes()->newInstance()->method;
+        return $this->method;
+    }
+
+    public function getReflectionMethod(): \ReflectionMethod
+    {
+        return $this->reflectionMethod;
     }
 
     public function getController(): object
     {
-        return new $this->controller();
+        return $this->reflectionMethod->getDeclaringClass()->newInstance();
     }
 }

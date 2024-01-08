@@ -3,16 +3,20 @@
 namespace Controller;
 
 use Framework\Attributes\RouteInfo;
-use Framework\Interfaces\ControllerInterface;
-use Framework\Renderer;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
-#[RouteInfo('/', 'GET')]
-class HomeController implements ControllerInterface
+class HomeController
 {
-    public function index(Renderer $renderer, array $parameters): ResponseInterface
+    #[RouteInfo('/', 'GET')]
+    public function index(): ResponseInterface
     {
         return new Response(200, [], 'Hello World !');
+    }
+
+    #[RouteInfo('/', 'POST')]
+    public function store(): ResponseInterface
+    {
+        return new Response(200, [], 'Hello World from POST !');
     }
 }

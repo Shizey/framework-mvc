@@ -2,7 +2,6 @@
 
 use Dotenv\Dotenv;
 use Framework\Database;
-use Framework\Route;
 use Framework\Router;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ServerRequest;
@@ -21,8 +20,7 @@ $controllers = scandir(__DIR__.'/../src/Controller');
 foreach ($controllers as $controller) {
     if (str_ends_with($controller, 'Controller.php')) {
         $controller = 'Controller\\'.str_replace('.php', '', $controller);
-        $route = new Route($controller);
-        $router->add($route);
+        $router->setRoutesFromController($controller);
     }
 }
 
