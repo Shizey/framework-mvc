@@ -17,10 +17,6 @@ class Route
     private string $path;
     private string $method;
 
-
-    /**
-     * @param class-string $controller
-     */
     public function __construct(ReflectionMethod $reflectionMethod, string $path, string $method)
     {
         $this->reflectionMethod = $reflectionMethod;

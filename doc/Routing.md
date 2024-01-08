@@ -4,12 +4,12 @@ To create a page in your application you need to link a `Route` to a `Controller
 
 ## Create a controller
 
-To create a controller you need to create a PHP file in `src/Controller`. The name of that file **must finish** by Controller (Ex : `HomeController.php`). The method who will be executed when the user request the route is named `index` and is interface is the following
+To create a controller you need to create a PHP file in `src/Controller`. The name of that file **must finish** by Controller (Ex : `HomeController.php`). The method who will be executed when the user route linked to that route. He must be following the following interface.
 
 ```php
 interface ControllerInterface
 {
-    public function index(Renderer $renderer, array $parameters): ResponseInterface;
+    public function yourFunction(Renderer $renderer, array $parameters): ResponseInterface;
 }
 ```
 
@@ -18,22 +18,16 @@ interface ControllerInterface
 ```php
 namespace Controller;
 
-use Framework\Attributes\RouteInfo;
-use Framework\Interfaces\ControllerInterface;
-use Framework\Renderer;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
-
-class HomeController implements ControllerInterface
+class HomeController
 {
     #[RouteInfo("/", "GET")]
-    public function index(Renderer $renderer, array $parameters): ResponseInterface
+    public function index(): ResponseInterface
     {
         return new Response(200, [], "Hello, World!");
     }
 
     #[RouteInfo('/', 'POST')]
-    public function store(Renderer $renderer, array $parameters): ResponseInterface
+    public function store(): ResponseInterface
     {
         return new Response(200, [], 'Hello World from POST !');
     }
@@ -45,7 +39,7 @@ class HomeController implements ControllerInterface
 In your controller you can set variable to URL using the following syntax
 
 ```php
-class HomeController implements ControllerInterface
+class HomeController
 {
     #[RouteInfo("/test/{variable}/", "GET")]
     public function index(Renderer $renderer, array $parameters): ResponseInterface

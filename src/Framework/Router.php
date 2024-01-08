@@ -85,10 +85,6 @@ class Router
 
         $controller = $route->getController();
 
-        if (!$controller instanceof ControllerInterface) {
-            throw new \Exception('The controller must implement the ControllerInterface');
-        }
-
         return $controller->{$route->getReflectionMethod()->getName()}(new Renderer(__DIR__ . '/../View'), $routeInfo['slugs']);
     }
 

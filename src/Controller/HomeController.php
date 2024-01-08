@@ -8,16 +8,16 @@ use Framework\Renderer;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class HomeController implements ControllerInterface
+class HomeController
 {
     #[RouteInfo('/', 'GET')]
-    public function index(Renderer $renderer, array $parameters): ResponseInterface
+    public function index(): ResponseInterface
     {
         return new Response(200, [], 'Hello World !');
     }
 
     #[RouteInfo('/', 'POST')]
-    public function store(Renderer $renderer, array $parameters): ResponseInterface
+    public function store(): ResponseInterface
     {
         return new Response(200, [], 'Hello World from POST !');
     }
