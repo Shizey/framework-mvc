@@ -22,7 +22,7 @@ abstract class BaseModel
      */
     public static function fetchAll(): array
     {
-        $stmt = Database::getInstance()->prepare('SELECT * FROM '.static::TABLE);
+        $stmt = Database::getInstance()->prepare('SELECT * FROM ' . static::TABLE);
         $stmt->execute();
         $objs = [];
         foreach ($stmt->fetchAll() as $obj) {
@@ -43,9 +43,9 @@ abstract class BaseModel
         $this->id = $id;
     }
 
-    public static function fetchById(int $id): object|bool
+    public static function fetchById(int $id): object|false
     {
-        $stmt = Database::getInstance()->prepare('SELECT * FROM '.static::TABLE.' WHERE id = :id');
+        $stmt = Database::getInstance()->prepare('SELECT * FROM ' . static::TABLE . ' WHERE id = :id');
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         $fetched = $stmt->fetch();
@@ -63,13 +63,13 @@ abstract class BaseModel
      */
     public static function fetchBy(array $data): array
     {
-        $query = 'SELECT * FROM '.static::TABLE.' WHERE ';
+        $query = 'SELECT * FROM ' . static::TABLE . ' WHERE ';
         foreach ($data as $key => $value) {
-            $query .= $key.' = :'.$key.' AND ';
+            $query .= $key . ' = :' . $key . ' AND ';
         }
         $stmt = Database::getInstance()->prepare(substr($query, 0, -5));
         foreach ($data as $key => $value) {
-            $stmt->bindValue(':'.$key, $value);
+            $stmt->bindValue(':' . $key, $value);
         }
         $stmt->execute();
         $instance = new static();
@@ -81,7 +81,7 @@ abstract class BaseModel
 
     public function delete(): void
     {
-        $stmt = Database::getInstance()->prepare('DELETE FROM '.static::TABLE.' WHERE id = :id');
+        $stmt = Database::getInstance()->prepare('DELETE FROM ' . static::TABLE . ' WHERE id = :id');
         $stmt->bindValue(':id', $this->getId());
         $stmt->execute();
     }
