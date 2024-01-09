@@ -28,7 +28,7 @@ class Router
         $findRoute = array_search($route->getPath(), $routesPath);
 
         if ($findRoute !== false && $this->routes[$findRoute]->getMethod() === $route->getMethod()) {
-            throw new \Exception('This route already exist with the path: ' . $route->getPath());
+            throw new \Exception('This route already exist with the path: '.$route->getPath());
         }
 
         $this->routes[] = $route;
@@ -65,7 +65,7 @@ class Router
         $routePath = $routeInfo['path'];
 
         if ($routePath === '') {
-            throw new \Exception('This route does not exist with the path: ' . $request->getUri()->getPath());
+            throw new \Exception('This route does not exist with the path: '.$request->getUri()->getPath());
         }
 
         $methodRoute = array_filter($this->routes, function ($route) use ($routePath, $request) {
@@ -73,11 +73,11 @@ class Router
         });
 
         if (count($methodRoute) === 0) {
-            throw new \Exception('The route ' . $routePath . ' does not exist with the method: ' . $request->getMethod());
+            throw new \Exception('The route '.$routePath.' does not exist with the method: '.$request->getMethod());
         }
 
         if (count($methodRoute) > 1) {
-            throw new \Exception('The route ' . $routePath . ' exist more than one time with the method: ' . $request->getMethod());
+            throw new \Exception('The route '.$routePath.' exist more than one time with the method: '.$request->getMethod());
         }
 
         $route = array_shift($methodRoute);
@@ -85,11 +85,11 @@ class Router
         $controller = $route->getController();
 
         return $controller->{$route->getReflectionMethod()->getName()}(
-            new Renderer(__DIR__ . '/../src/View'),
-            [
-                'request' => $request,
-                'slugs' => $routeInfo['slugs'],
-            ]
+            new Renderer(__DIR__.'/../src/View'),
+        [
+            'request' => $request,
+            'slugs' => $routeInfo['slugs'],
+        ]
         );
     }
 

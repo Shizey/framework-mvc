@@ -14,13 +14,14 @@ class HomeController
     public function index(Renderer $renderer): ResponseInterface
     {
         $users = UserModel::fetchAll();
+
         return new Response(200, [], $renderer->renderTwig('Home/index', ['users' => $users]));
     }
 
     /**
      * AddUser
      * The AddUser method is used to add a user.
-     * @param Renderer $renderer
+     *
      * @param array<string, mixed> $parameters
      */
     #[RouteInfo('/', 'POST')]
@@ -29,6 +30,7 @@ class HomeController
         (new UserModel())
             ->setUsername($parameters['request']->getParsedBody()['username'])
             ->save();
+
         return new Response(302, ['Location' => '/']);
     }
 }

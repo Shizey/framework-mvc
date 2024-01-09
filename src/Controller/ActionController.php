@@ -12,7 +12,7 @@ class ActionController
     /**
      * DeleteUser
      * The DeleteUser method is used to delete a user.
-     * @param Renderer $renderer
+     *
      * @param array<string, mixed> $parameters
      */
     #[RouteInfo('/delete/{userID}/', 'GET')]
@@ -32,7 +32,7 @@ class ActionController
     /**
      * EditUser
      * The EditUser method is used to display the edit user form.
-     * @param Renderer $renderer
+     *
      * @param array<string, mixed> $parameters
      */
     #[RouteInfo('/edit/{userID}/', 'GET')]
@@ -52,7 +52,7 @@ class ActionController
     /**
      * EditUserPost
      * The EditUserPost method is used to edit a user.
-     * @param Renderer $renderer
+     *
      * @param array<string, mixed> $parameters
      */
     #[RouteInfo('/edit/', 'POST')]
@@ -65,6 +65,7 @@ class ActionController
         if ($user instanceof UserModel) {
             $user->setUsername($body['newUsername']);
             $user->save();
+
             return new Response(302, ['Location' => '/']);
         } else {
             return new Response(404, [], $renderer->render('Error : User not found'));

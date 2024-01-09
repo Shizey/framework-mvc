@@ -11,9 +11,9 @@ class UserFixtures implements FixturesInterface
 
     public function load(): void
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             (new UserModel())
-                ->setUsername('user' . $i)
+                ->setUsername('user'.$i)
                 ->save();
         }
     }
