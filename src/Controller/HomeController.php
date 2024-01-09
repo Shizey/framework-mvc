@@ -3,20 +3,26 @@
 namespace Controller;
 
 use Framework\Attributes\RouteInfo;
+use Framework\Renderer;
 use GuzzleHttp\Psr7\Response;
+use Model\UserModel;
 use Psr\Http\Message\ResponseInterface;
 
 class HomeController
 {
     #[RouteInfo('/', 'GET')]
-    public function index(): ResponseInterface
+    public function index(Renderer $renderer): ResponseInterface
     {
-        return new Response(200, [], 'Hello World !');
+        $users = UserModel::fetchAll();
+        return new Response(200, [], $renderer->renderTwig('Home/index', ['users' => $users]));
     }
 
     #[RouteInfo('/', 'POST')]
-    public function store(): ResponseInterface
+    public function AddUser(Renderer $renderer, array $parameters): ResponseInterface
     {
-        return new Response(200, [], 'Hello World from POST !');
+        (new UserModel())
+            ->setUsername($parameters['request']->getParsedBody()['username'])
+            ->save();
+        return new Response(302, ['Location' => '/']);
     }
 }
