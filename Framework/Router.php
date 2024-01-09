@@ -84,7 +84,13 @@ class Router
 
         $controller = $route->getController();
 
-        return $controller->{$route->getReflectionMethod()->getName()}(new Renderer(__DIR__.'/../src/View'), $routeInfo['slugs']);
+        return $controller->{$route->getReflectionMethod()->getName()}(
+            new Renderer(__DIR__.'/../src/View'),
+        [
+            'request' => $request,
+            'slugs' => $routeInfo['slugs'],
+        ]
+        );
     }
 
     /**
